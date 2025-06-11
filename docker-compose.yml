@@ -1,0 +1,35 @@
+
+services:
+  backend:
+    build: .
+    ports:
+      - "${PORT}:${PORT}"
+    depends_on:
+      - mongo
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    networks:
+      - app-network
+
+  mongo:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mongo-data:
+
+networks:
+  app-network:
+    driver: bridge

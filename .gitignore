@@ -1,0 +1,15 @@
+node_modules
+.env
+# Node.js
+node_modules/
+
+
+
+
+
+# Docker
+*.pid
+*.log
+docker-compose.override.yml
+
+
